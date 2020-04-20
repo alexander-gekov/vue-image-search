@@ -4,7 +4,7 @@
     <h6>Powered By Unsplash.com</h6>
     <form @submit.prevent="formSubmitted()">
       <label for="searchTerm">Keyword: </label>
-      <input v-model="searchTerm" type="text" class="u-full-width"
+      <input v-model="searchTerm" type="search" class="u-full-width"
              id="searchTerm" name="searchTerm">
       <button type="submit">Search</button>
     </form>
@@ -56,7 +56,7 @@ img{
 }
 
 .images{
-  column-count: 2;
+  column-count: 1;
 }
 
 .loading {
