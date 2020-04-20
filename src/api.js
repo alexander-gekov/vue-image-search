@@ -1,5 +1,5 @@
 const API_URL = 'https://api.unsplash.com/';
-const apikey = process.env.API_KEY;
+const apikey = process.env.VUE_APP_API_KEY;
 
 export default {
   search(searchTerm) {
