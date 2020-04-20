@@ -1,28 +1,72 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>{{title}}</h1>
+    <h6>Powered By Unsplash.com</h6>
+    <form @submit.prevent="formSubmitted()">
+      <label for="searchTerm">Keyword: </label>
+      <input v-model="searchTerm" type="text" class="u-full-width"
+             id="searchTerm" name="searchTerm">
+      <button type="submit">Search</button>
+    </form>
+    <img v-if="loading" class="loading" src="https://i.gifer.com/ZKZg.gif" alt="loading">
+    <section class="images">
+      <img v-for="image in images" :key="image.id" :src="image.urls.regular" alt="">
+    </section>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+// eslint-disable-next-line import/extensions,import/no-named-as-default
+import API from './api.js';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      title: 'Vue Image Search',
+      searchTerm: '',
+      images: [],
+      loading: false,
+    };
+  },
   components: {
-    HelloWorld,
+  },
+  methods: {
+    formSubmitted() {
+      this.loading = true;
+      this.images = [];
+      API.search(this.searchTerm)
+        .then((images) => {
+          this.images = images;
+          this.loading = false;
+        });
+    },
   },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body{
+  width: 80%;
+  margin: 2em auto 0 auto;
+}
+
+img{
+  width: 100%;
+}
+
+.images{
+  column-count: 2;
+}
+
+.loading {
+  width: 50px;
+  padding: 10em 50%;
+}
+
+@media (min-width: 750px) {
+  .images{
+    column-count: 3;
+  }
 }
 </style>
